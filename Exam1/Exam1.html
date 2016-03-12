@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Exam 1 Assignment</title>
+    <link rel="stylesheet" type="text/css" href="styles/Exam1.css"/>
+    
+<script>
+    
+    function CalcPayment()
+    {
+        var payment = 0;
+        var amount = document.getElementById("loanamount").value;
+        var interest = document.getElementById("loaninterest").value;
+        var months = document.getElementById("loanmonths").value;
+        
+        var interest2 = interest/1200;
+        var newrate = 1+interest2;
+        var interest3 = interest/12;
+        
+        payment = amount * interest2 / (1-(Math.pow(1/(1 + interest2), months)));
+        
+        document.getElementById("paymentdisplay").innerHTML = payment;
+        
+        
+        var remaining = 0;
+        var count = 0;
+        var totalpayment = payment * months;
+        var monthinterest = 0;
+        var principal = 0;
+        var result = "<table><tr><th>Payments</th><th>Monthly Payment</th><th>Ending Balance</th><th>Interest</th><th>Principal</th></tr>"
+        for(count=0; count<months; count++)
+        {
+            remaining = amount - payment;
+            amount = remaining;
+            monthinterest = interest2*remaining;
+            principal = payment - monthinterest;
+            
+            result += "<tr><td>" + (count + 1) + "</td><td>" + payment.toFixed(2) + "</td><td>" + remaining.toFixed(2) + "</td><td>" + monthinterest.toFixed(2) + "</td><td>" + principal.toFixed(2) + "</td></tr>";
+            
+        }
+        result += "</table>";
+        
+        document.getElementById("tabledisplay").innerHTML = result;
+    }
+    
+    
+ 
+</script>
+</head>
+
+<body>
+<div class="div1">
+<h1>Loan Payment Calculation</h1>
+<hr>
+<label>Please enter the loan amount.</label>
+<input type="number" id="loanamount">
+<br>
+<label>Please enter the yearly loan interest.</label>
+<input type="number" id="loaninterest">
+<br>
+<label>Please enter the term of the loan in months.</label>
+<input type="number" id="loanmonths">
+<br>
+<button onclick="CalcPayment()">Calculate Payment and Amortization Table</button>
+</div>
+<hr>
+<br>
+<section>
+<h3>This is the Monthly Loan Payment:</h3>
+<label id="paymentdisplay">The loan payment will be displayed here.</label><br>
+</section>
+<hr>
+
+<label id="tabledisplay">The Table will be displayed here.</label>
+
+</body>
+</html>
